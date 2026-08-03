@@ -1,5 +1,5 @@
 import type { Stats } from "fs";
-import type { StorageDriver, StorageOptions } from "@/types/storage";
+import type { StorageDriver, StorageOptions } from "../../types/storage";
 export default class StorageLocalBuilder implements StorageDriver {
     protected _config: Record<string, any>;
     constructor(config: Record<string, any>);

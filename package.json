@@ -8,6 +8,11 @@
     },
     "main": "index.js",
     "module": "index.js",
+    "dependencies": {
+        "@bejibun/app": "^0.1.24",
+        "@bejibun/logger": "^0.1.22",
+        "@bejibun/utils": "^0.1.28"
+    },
     "devDependencies": {
         "@types/bun": "latest",
         "tsc-alias": "^1.9.1"
@@ -27,16 +32,12 @@
     "license": "MIT",
     "scripts": {
         "alias": "bunx tsc-alias -p tsconfig.json",
+        "types": "cp -rf src/types dist",
         "rsync": "rsync -a dist/ ./",
         "clean": "rm -rf dist",
-        "build": "bun run clean && bunx tsc -p tsconfig.json && bun run alias && bun run rsync && bun run clean",
+        "build": "bunx tsc -p tsconfig.json && bun run types && bun run alias && bun run rsync && bun run clean",
         "deploy": "bun run build && bun publish --access public"
     },
     "type": "module",
-    "types": "index.d.ts",
-    "dependencies": {
-        "@bejibun/app": "^0.1.24",
-        "@bejibun/logger": "^0.1.22",
-        "@bejibun/utils": "^0.1.28"
-    }
+    "types": "index.d.ts"
 }

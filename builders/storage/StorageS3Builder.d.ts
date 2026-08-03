@@ -1,4 +1,4 @@
-import type { StorageDriver, StorageOptions } from "@/types/storage";
+import type { StorageDriver, StorageOptions } from "../../types/storage";
 export default class StorageS3Builder implements StorageDriver {
     protected _config: Record<string, any>;
     protected client: Bun.S3Client;

@@ -1,5 +1,5 @@
 import type { Stats } from "fs";
-import type { StorageDisk, StorageOptions } from "@/types/storage";
+import type { StorageDisk, StorageOptions } from "../types/storage";
 import StorageBuilder from "../builders/StorageBuilder";
 export default class Storage {
     static build(disk: StorageDisk): StorageBuilder;

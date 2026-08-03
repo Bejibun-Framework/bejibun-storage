@@ -1,5 +1,5 @@
 import type { Stats } from "fs";
-import type { StorageDisk, StorageOptions } from "@/types/storage";
+import type { StorageDisk, StorageOptions } from "../types/storage";
 export default class StorageBuilder {
     protected conf: Record<string, any>;
     protected overrideDisk?: StorageDisk;
