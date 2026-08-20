@@ -34,7 +34,10 @@ export default class StorageBuilder {
     }
 
     private get currentDisk(): any {
-        return defineValue(this.overrideDisk, this.config.disks[defineValue(this.drive, this.config.default)]);
+        return defineValue(
+            this.overrideDisk,
+            this.config.disks[defineValue(this.drive, this.config.default)]
+        );
     }
 
     private get driver(): StorageDriver {
@@ -42,7 +45,8 @@ export default class StorageBuilder {
 
         if (isEmpty(driver)) throw new StorageException(`Missing "driver" on disk config.`);
 
-        if (!Enum.setEnums(StorageDiskDriverEnum).hasValue(driver)) throw new StorageException(`Not supported "driver" disk.`);
+        if (!Enum.setEnums(StorageDiskDriverEnum).hasValue(driver))
+            throw new StorageException(`Not supported "driver" disk.`);
 
         switch (driver) {
             case StorageDiskDriverEnum.Local:
@@ -75,7 +79,7 @@ export default class StorageBuilder {
     public async missing(filepath: string): Promise<boolean> {
         if (isEmpty(filepath)) throw new StorageException("The file path is required.");
 
-        return !await this.driver.missing(filepath);
+        return !(await this.driver.missing(filepath));
     }
 
     public async metadata(filepath: string): Promise<Stats | Bun.S3Stats> {
@@ -115,29 +119,45 @@ export default class StorageBuilder {
         try {
             await this.driver.put(filepath, content, options);
         } catch (error: any) {
-            Logger.setContext("Storage").error("Something went wrong when saving file.").trace(error);
+            Logger.setContext("Storage")
+                .error("Something went wrong when saving file.")
+                .trace(error);
         }
     }
 
-    public async copy(source: string, destination: string, options?: StorageOptions): Promise<void> {
+    public async copy(
+        source: string,
+        destination: string,
+        options?: StorageOptions
+    ): Promise<void> {
         if (isEmpty(source)) throw new StorageException("The source file path is required.");
-        if (isEmpty(destination)) throw new StorageException("The destination file path is required.");
+        if (isEmpty(destination))
+            throw new StorageException("The destination file path is required.");
 
         try {
             await this.driver.copy(source, destination, options);
         } catch (error: any) {
-            Logger.setContext("Storage").error("Something went wrong when copying file.").trace(error);
+            Logger.setContext("Storage")
+                .error("Something went wrong when copying file.")
+                .trace(error);
         }
     }
 
-    public async move(source: string, destination: string, options?: StorageOptions): Promise<void> {
+    public async move(
+        source: string,
+        destination: string,
+        options?: StorageOptions
+    ): Promise<void> {
         if (isEmpty(source)) throw new StorageException("The source file path is required.");
-        if (isEmpty(destination)) throw new StorageException("The destination file path is required.");
+        if (isEmpty(destination))
+            throw new StorageException("The destination file path is required.");
 
         try {
             await this.driver.move(source, destination, options);
         } catch (error: any) {
-            Logger.setContext("Storage").error("Something went wrong when moving file.").trace(error);
+            Logger.setContext("Storage")
+                .error("Something went wrong when moving file.")
+                .trace(error);
         }
     }
 

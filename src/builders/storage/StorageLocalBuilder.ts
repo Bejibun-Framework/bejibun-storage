@@ -13,7 +13,8 @@ export default class StorageLocalBuilder implements StorageDriver {
     }
 
     private get config(): Record<string, any> {
-        if (isEmpty(this._config.root)) throw new StorageException(`Missing "root" for "local" disk configuration.`);
+        if (isEmpty(this._config.root))
+            throw new StorageException(`Missing "root" for "local" disk configuration.`);
 
         return this._config;
     }
@@ -27,7 +28,7 @@ export default class StorageLocalBuilder implements StorageDriver {
     public async missing(filepath: string): Promise<boolean> {
         if (isEmpty(filepath)) throw new StorageException("The file path is required.");
 
-        return !await this.exists(filepath);
+        return !(await this.exists(filepath));
     }
 
     public async metadata(filepath: string): Promise<Stats> {
@@ -67,31 +68,47 @@ export default class StorageLocalBuilder implements StorageDriver {
         try {
             await Bun.write(path.resolve(this.config.root, filepath), content, options);
         } catch (error: any) {
-            Logger.setContext("Storage").error("Something went wrong when saving file.").trace(error);
+            Logger.setContext("Storage")
+                .error("Something went wrong when saving file.")
+                .trace(error);
         }
     }
 
-    public async copy(source: string, destination: string, options?: StorageOptions): Promise<void> {
+    public async copy(
+        source: string,
+        destination: string,
+        options?: StorageOptions
+    ): Promise<void> {
         if (isEmpty(source)) throw new StorageException("The source file path is required.");
-        if (isEmpty(destination)) throw new StorageException("The destination file path is required.");
+        if (isEmpty(destination))
+            throw new StorageException("The destination file path is required.");
 
         try {
             await this.put(destination, await this.get(source), options);
         } catch (error: any) {
-            Logger.setContext("Storage").error("Something went wrong when copying file.").trace(error);
+            Logger.setContext("Storage")
+                .error("Something went wrong when copying file.")
+                .trace(error);
         }
     }
 
-    public async move(source: string, destination: string, options?: StorageOptions): Promise<void> {
+    public async move(
+        source: string,
+        destination: string,
+        options?: StorageOptions
+    ): Promise<void> {
         if (isEmpty(source)) throw new StorageException("The source file path is required.");
-        if (isEmpty(destination)) throw new StorageException("The destination file path is required.");
+        if (isEmpty(destination))
+            throw new StorageException("The destination file path is required.");
 
         try {
             await this.copy(source, destination, options);
 
             await this.delete(source);
         } catch (error: any) {
-            Logger.setContext("Storage").error("Something went wrong when moving file.").trace(error);
+            Logger.setContext("Storage")
+                .error("Something went wrong when moving file.")
+                .trace(error);
         }
     }
 

@@ -20,7 +20,7 @@ export default class StorageLocalBuilder {
     async missing(filepath) {
         if (isEmpty(filepath))
             throw new StorageException("The file path is required.");
-        return !await this.exists(filepath);
+        return !(await this.exists(filepath));
     }
     async metadata(filepath) {
         if (isEmpty(filepath))
@@ -56,7 +56,9 @@ export default class StorageLocalBuilder {
             await Bun.write(path.resolve(this.config.root, filepath), content, options);
         }
         catch (error) {
-            Logger.setContext("Storage").error("Something went wrong when saving file.").trace(error);
+            Logger.setContext("Storage")
+                .error("Something went wrong when saving file.")
+                .trace(error);
         }
     }
     async copy(source, destination, options) {
@@ -68,7 +70,9 @@ export default class StorageLocalBuilder {
             await this.put(destination, await this.get(source), options);
         }
         catch (error) {
-            Logger.setContext("Storage").error("Something went wrong when copying file.").trace(error);
+            Logger.setContext("Storage")
+                .error("Something went wrong when copying file.")
+                .trace(error);
         }
     }
     async move(source, destination, options) {
@@ -81,7 +85,9 @@ export default class StorageLocalBuilder {
             await this.delete(source);
         }
         catch (error) {
-            Logger.setContext("Storage").error("Something went wrong when moving file.").trace(error);
+            Logger.setContext("Storage")
+                .error("Something went wrong when moving file.")
+                .trace(error);
         }
     }
     async delete(filepath) {

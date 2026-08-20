@@ -40,14 +40,22 @@ export default class Storage {
     }
 
     public static async put(path: string, content: any, options?: StorageOptions): Promise<void> {
-        return await new StorageBuilder().put(path, content);
+        return await new StorageBuilder().put(path, content, options);
     }
 
-    public static async copy(source: string, destination: string, options?: StorageOptions): Promise<void> {
+    public static async copy(
+        source: string,
+        destination: string,
+        options?: StorageOptions
+    ): Promise<void> {
         return await new StorageBuilder().copy(source, destination, options);
     }
 
-    public static async move(source: string, destination: string, options?: StorageOptions): Promise<void> {
+    public static async move(
+        source: string,
+        destination: string,
+        options?: StorageOptions
+    ): Promise<void> {
         return await new StorageBuilder().move(source, destination, options);
     }
 

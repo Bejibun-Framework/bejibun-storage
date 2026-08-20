@@ -60,7 +60,7 @@ export default class StorageBuilder {
     async missing(filepath) {
         if (isEmpty(filepath))
             throw new StorageException("The file path is required.");
-        return !await this.driver.missing(filepath);
+        return !(await this.driver.missing(filepath));
     }
     async metadata(filepath) {
         if (isEmpty(filepath))
@@ -96,7 +96,9 @@ export default class StorageBuilder {
             await this.driver.put(filepath, content, options);
         }
         catch (error) {
-            Logger.setContext("Storage").error("Something went wrong when saving file.").trace(error);
+            Logger.setContext("Storage")
+                .error("Something went wrong when saving file.")
+                .trace(error);
         }
     }
     async copy(source, destination, options) {
@@ -108,7 +110,9 @@ export default class StorageBuilder {
             await this.driver.copy(source, destination, options);
         }
         catch (error) {
-            Logger.setContext("Storage").error("Something went wrong when copying file.").trace(error);
+            Logger.setContext("Storage")
+                .error("Something went wrong when copying file.")
+                .trace(error);
         }
     }
     async move(source, destination, options) {
@@ -120,7 +124,9 @@ export default class StorageBuilder {
             await this.driver.move(source, destination, options);
         }
         catch (error) {
-            Logger.setContext("Storage").error("Something went wrong when moving file.").trace(error);
+            Logger.setContext("Storage")
+                .error("Something went wrong when moving file.")
+                .trace(error);
         }
     }
     async delete(filepath) {

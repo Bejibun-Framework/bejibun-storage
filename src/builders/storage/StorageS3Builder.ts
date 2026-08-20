@@ -19,9 +19,12 @@ export default class StorageS3Builder implements StorageDriver {
     }
 
     private get config(): Record<string, any> {
-        if (isEmpty(this._config.endpoint)) throw new StorageException(`Missing "endpoint" for "s3" disk configuration.`);
-        if (isEmpty(this._config.access_key_id)) throw new StorageException(`Missing "access_key_id" for "s3" disk configuration.`);
-        if (isEmpty(this._config.secret_access_key)) throw new StorageException(`Missing "secret_access_key" for "s3" disk configuration.`);
+        if (isEmpty(this._config.endpoint))
+            throw new StorageException(`Missing "endpoint" for "s3" disk configuration.`);
+        if (isEmpty(this._config.access_key_id))
+            throw new StorageException(`Missing "access_key_id" for "s3" disk configuration.`);
+        if (isEmpty(this._config.secret_access_key))
+            throw new StorageException(`Missing "secret_access_key" for "s3" disk configuration.`);
 
         return this._config;
     }
@@ -35,7 +38,7 @@ export default class StorageS3Builder implements StorageDriver {
     public async missing(filepath: string): Promise<boolean> {
         if (isEmpty(filepath)) throw new StorageException("The file path is required.");
 
-        return !await this.exists(filepath);
+        return !(await this.exists(filepath));
     }
 
     public async metadata(filepath: string): Promise<Bun.S3Stats> {
@@ -75,31 +78,47 @@ export default class StorageS3Builder implements StorageDriver {
         try {
             await this.client.write(filepath, content, options);
         } catch (error: any) {
-            Logger.setContext("Storage").error("Something went wrong when saving file.").trace(error);
+            Logger.setContext("Storage")
+                .error("Something went wrong when saving file.")
+                .trace(error);
         }
     }
 
-    public async copy(source: string, destination: string, options?: StorageOptions): Promise<void> {
+    public async copy(
+        source: string,
+        destination: string,
+        options?: StorageOptions
+    ): Promise<void> {
         if (isEmpty(source)) throw new StorageException("The source file path is required.");
-        if (isEmpty(destination)) throw new StorageException("The destination file path is required.");
+        if (isEmpty(destination))
+            throw new StorageException("The destination file path is required.");
 
         try {
             await this.put(destination, await this.get(source), options);
         } catch (error: any) {
-            Logger.setContext("Storage").error("Something went wrong when copying file.").trace(error);
+            Logger.setContext("Storage")
+                .error("Something went wrong when copying file.")
+                .trace(error);
         }
     }
 
-    public async move(source: string, destination: string, options?: StorageOptions): Promise<void> {
+    public async move(
+        source: string,
+        destination: string,
+        options?: StorageOptions
+    ): Promise<void> {
         if (isEmpty(source)) throw new StorageException("The source file path is required.");
-        if (isEmpty(destination)) throw new StorageException("The destination file path is required.");
+        if (isEmpty(destination))
+            throw new StorageException("The destination file path is required.");
 
         try {
             await this.copy(source, destination, options);
 
             await this.delete(source);
         } catch (error: any) {
-            Logger.setContext("Storage").error("Something went wrong when moving file.").trace(error);
+            Logger.setContext("Storage")
+                .error("Something went wrong when moving file.")
+                .trace(error);
         }
     }
 

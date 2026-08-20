@@ -28,7 +28,7 @@ export default class Storage {
         return await new StorageBuilder().get(path);
     }
     static async put(path, content, options) {
-        return await new StorageBuilder().put(path, content);
+        return await new StorageBuilder().put(path, content, options);
     }
     static async copy(source, destination, options) {
         return await new StorageBuilder().copy(source, destination, options);

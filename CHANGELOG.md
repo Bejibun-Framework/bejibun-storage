@@ -3,6 +3,35 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [v0.1.1](https://github.com/Bejibun-Framework/bejibun-storage/compare/v0.1.0...v0.1.1) - 2026-08-20
+
+### 🩹 Fixes
+- Fix missing `options` in `Storage.put()`
+
+### 📖 Changes
+#### Tooling
+- Added `prettier` + `.prettierrc.json` / `.prettierignore` and an `eslint.config.js` (flat config, `typescript-eslint`) for consistent formatting/linting across `src`
+- Added `bun run format`, `bun run eslint`, and `bun run lint` scripts; `bun run build` now runs `lint` before compiling
+- `alias` script now runs `tsc-alias` directly instead of via `bunx`
+
+### 📦 Dependencies
+
+- Bumped `tsc-alias` (devDependency) from `^1.8.16` to `^1.9.2`
+- Added `@eslint/js` (devDependency) `^10.0.1`
+- Added `eslint` (devDependency) `^10.8.1`
+- Added `eslint-config-prettier` (devDependency) `^10.1.8`
+- Added `globals` (devDependency) `^17.11.0`
+- Added `prettier` (devDependency) `^3.9.6`
+- Added `typescript` (devDependency) `^6.0.3`
+- Added `typescript-eslint` (devDependency) `^8.67.0`
+
+### ❤️Contributors
+- Havea Crenata ([@crenata](https://github.com/crenata))
+
+**Full Changelog**: https://github.com/Bejibun-Framework/bejibun-storage/blob/master/CHANGELOG.md
+
+---
+
 ## [v0.1.0](https://github.com/Bejibun-Framework/bejibun-storage/compare/v0.1.0...v0.1.0) - 2026-08-03
 
 ### 🩹 Fixes
