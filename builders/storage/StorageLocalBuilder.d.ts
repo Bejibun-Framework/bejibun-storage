@@ -1,5 +1,5 @@
 import type { Stats } from "fs";
-import type { StorageDriver, StorageOptions } from "../../types/storage";
+import type { StorageDriver, StorageOptions } from "../../types/storage.js";
 /**
  * Local filesystem storage driver backed by Bun file utilities.
  */
@@ -77,6 +77,7 @@ export default class StorageLocalBuilder implements StorageDriver {
      * @param {any} content - The content to store.
      * @param {StorageOptions} options - Additional storage options.
      * @throws {StorageException} When the file path or content is empty.
+     * @throws {Error} The underlying driver error is re-thrown.
      */
     put(filepath: string, content: any, options?: StorageOptions): Promise<void>;
     /**
@@ -86,6 +87,7 @@ export default class StorageLocalBuilder implements StorageDriver {
      * @param {string} destination - The destination file path.
      * @param {StorageOptions} options - Additional storage options.
      * @throws {StorageException} When the source or destination path is empty.
+     * @throws {Error} The underlying driver error is re-thrown.
      */
     copy(source: string, destination: string, options?: StorageOptions): Promise<void>;
     /**
@@ -95,6 +97,7 @@ export default class StorageLocalBuilder implements StorageDriver {
      * @param {string} destination - The destination file path.
      * @param {StorageOptions} options - Additional storage options.
      * @throws {StorageException} When the source or destination path is empty.
+     * @throws {Error} The underlying driver error is re-thrown.
      */
     move(source: string, destination: string, options?: StorageOptions): Promise<void>;
     /**

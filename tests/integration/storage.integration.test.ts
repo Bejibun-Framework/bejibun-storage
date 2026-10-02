@@ -123,6 +123,26 @@ describe("StorageBuilder integration (local disk)", () => {
         expect(await builder.exists(filepath)).toBe(false);
         expect(await builder.missing(filepath)).toBe(true);
     });
+
+    test("put re-throws driver errors instead of swallowing them", async () => {
+        const builder = new StorageBuilder().build(disk);
+
+        await expect(builder.put(`${rootDir}/.keep/child.txt`, "x")).rejects.toThrow();
+    });
+
+    test("copy re-throws driver errors instead of swallowing them", async () => {
+        const builder = new StorageBuilder().build(disk);
+
+        await expect(builder.copy(`${rootDir}/no-such-src.txt`, `${rootDir}/no-such-dst.txt`))
+            .rejects.toThrow();
+    });
+
+    test("move re-throws driver errors instead of swallowing them", async () => {
+        const builder = new StorageBuilder().build(disk);
+
+        await expect(builder.move(`${rootDir}/no-such-src.txt`, `${rootDir}/no-such-dst.txt`))
+            .rejects.toThrow();
+    });
 });
 
 describe("Storage facade integration (local disk)", () => {

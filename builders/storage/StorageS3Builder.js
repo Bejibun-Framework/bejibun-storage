@@ -1,5 +1,4 @@
-import Logger from "@bejibun/logger";
-import StorageException from "../../exceptions/StorageException";
+import StorageException from "../../exceptions/StorageException.js";
 /**
  * S3-compatible storage driver backed by a Bun S3 client.
  */
@@ -124,20 +123,14 @@ export default class StorageS3Builder {
      * @param {any} content - The content to store.
      * @param {StorageOptions} options - Additional storage options.
      * @throws {StorageException} When the file path or content is empty.
+     * @throws {Error} The underlying driver error is re-thrown.
      */
     async put(filepath, content, options) {
         if (!filepath)
             throw new StorageException("The file path is required.");
         if (!content)
             throw new StorageException("The content is required.");
-        try {
-            await this.client.write(filepath, content, options);
-        }
-        catch (error) {
-            Logger.setContext("Storage")
-                .error("Something went wrong when saving file.")
-                .trace(error);
-        }
+        await this.client.write(filepath, content, options);
     }
     /**
      * Copy a file to a new location.
@@ -146,20 +139,14 @@ export default class StorageS3Builder {
      * @param {string} destination - The destination file path.
      * @param {StorageOptions} options - Additional storage options.
      * @throws {StorageException} When the source or destination path is empty.
+     * @throws {Error} The underlying driver error is re-thrown.
      */
     async copy(source, destination, options) {
         if (!source)
             throw new StorageException("The source file path is required.");
         if (!destination)
             throw new StorageException("The destination file path is required.");
-        try {
-            await this.put(destination, await this.get(source), options);
-        }
-        catch (error) {
-            Logger.setContext("Storage")
-                .error("Something went wrong when copying file.")
-                .trace(error);
-        }
+        await this.put(destination, await this.get(source), options);
     }
     /**
      * Move a file to a new location.
@@ -168,21 +155,15 @@ export default class StorageS3Builder {
      * @param {string} destination - The destination file path.
      * @param {StorageOptions} options - Additional storage options.
      * @throws {StorageException} When the source or destination path is empty.
+     * @throws {Error} The underlying driver error is re-thrown.
      */
     async move(source, destination, options) {
         if (!source)
             throw new StorageException("The source file path is required.");
         if (!destination)
             throw new StorageException("The destination file path is required.");
-        try {
-            await this.copy(source, destination, options);
-            await this.delete(source);
-        }
-        catch (error) {
-            Logger.setContext("Storage")
-                .error("Something went wrong when moving file.")
-                .trace(error);
-        }
+        await this.copy(source, destination, options);
+        await this.delete(source);
     }
     /**
      * Delete a file from storage.

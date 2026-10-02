@@ -1,6 +1,6 @@
 import type { Stats } from "fs";
-import type { StorageDisk, StorageOptions } from "../types/storage";
-import StorageBuilder from "../builders/StorageBuilder";
+import type { StorageDisk, StorageOptions } from "../types/storage.js";
+import StorageBuilder from "../builders/StorageBuilder.js";
 /**
  * Static facade for performing storage operations via the default builder.
  */

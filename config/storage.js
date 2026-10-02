@@ -1,5 +1,5 @@
 import App from "@bejibun/app";
-import StorageDiskDriverEnum from "../enums/StorageDiskDriverEnum";
+import StorageDiskDriverEnum from "../enums/StorageDiskDriverEnum.js";
 /**
  * Default storage configuration defining the available disk drivers and their settings.
  */

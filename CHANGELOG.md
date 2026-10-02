@@ -3,6 +3,32 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [v0.1.13](https://github.com/Bejibun-Framework/bejibun-storage/compare/v0.1.11...v0.1.13) - 2026-10-02
+
+### 🩹 Fixes
+- Removed the silent error swallowing in `StorageBuilder`, `StorageLocalBuilder`, and `StorageS3Builder`. `put()`, `copy()`, and `move()` previously caught every driver error, logged it, and returned `undefined` — a failing write/copy/move looked like success. Now the underlying driver error is re-thrown to the caller.
+
+### 📖 Changes
+- `put()`, `copy()`, and `move()` now propagate driver errors (`Bun.write`/filesystem or S3 failures) instead of logging and continuing.
+- Removed the now-unused `Logger` import from the three builders.
+- Documented the re-throw behavior in the JSDoc `@throws` tags of `put()`, `copy()`, and `move()`.
+
+### 📦 Dependencies
+
+- Bumped [`@bejibun/utils`](https://github.com/Bejibun-Framework/bejibun-utils) from `^0.1.30` to `^0.1.33`
+- Bumped `eslint` (devDependency) from `^10.9.1` to `^10.11.0`
+- Bumped `globals` (devDependency) from `^17.12.0` to `^17.13.0`
+- Bumped `prettier` (devDependency) from `^3.9.6` to `^3.9.9`
+- Bumped `tsc-alias` (devDependency) from `^1.9.4` to `^1.9.7`
+- Bumped `typescript-eslint` (devDependency) from `^8.69.0` to `^8.71.0`
+
+### ❤️Contributors
+- Havea Crenata ([@crenata](https://github.com/crenata))
+
+**Full Changelog**: https://github.com/Bejibun-Framework/bejibun-storage/blob/master/CHANGELOG.md
+
+---
+
 ## [v0.1.11](https://github.com/Bejibun-Framework/bejibun-storage/compare/v0.1.1...v0.1.11) - 2026-09-04
 
 ### 🩹 Fixes

@@ -1,4 +1,4 @@
-import StorageBuilder from "../builders/StorageBuilder";
+import StorageBuilder from "../builders/StorageBuilder.js";
 /**
  * Static facade for performing storage operations via the default builder.
  */

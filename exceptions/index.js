@@ -1,4 +1,4 @@
 /**
  * Re-exports the storage exception classes.
  */
-export { default as StorageException } from "./StorageException";
+export { default as StorageException } from "./StorageException.js";

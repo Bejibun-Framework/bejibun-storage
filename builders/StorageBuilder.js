@@ -1,11 +1,10 @@
 import App from "@bejibun/app";
-import Logger from "@bejibun/logger";
 import { defineValue } from "@bejibun/utils";
 import Enum from "@bejibun/utils/facades/Enum";
-import StorageLocalBuilder from "./storage/StorageLocalBuilder";
-import StorageS3Builder from "./storage/StorageS3Builder";
-import StorageDiskDriverEnum from "../enums/StorageDiskDriverEnum";
-import StorageException from "../exceptions/StorageException";
+import StorageLocalBuilder from "./storage/StorageLocalBuilder.js";
+import StorageS3Builder from "./storage/StorageS3Builder.js";
+import StorageDiskDriverEnum from "../enums/StorageDiskDriverEnum.js";
+import StorageException from "../exceptions/StorageException.js";
 /** The app storage config, loaded once from disk. */
 let cachedConfig;
 /**
@@ -20,7 +19,7 @@ const loadConfig = () => {
         cachedConfig = require(App.Path.configPath("storage.ts")).default;
     }
     catch {
-        cachedConfig = require("../config/storage").default;
+        cachedConfig = require("../config/storage.js").default;
     }
     return cachedConfig;
 };
@@ -191,20 +190,14 @@ export default class StorageBuilder {
      * @param {any} content - The content to store.
      * @param {StorageOptions} options - Additional storage options.
      * @throws {StorageException} When the file path or content is empty.
+     * @throws {Error} The underlying driver error is re-thrown.
      */
     async put(filepath, content, options) {
         if (!filepath)
             throw new StorageException("The file path is required.");
         if (!content)
             throw new StorageException("The content is required.");
-        try {
-            await this.driver.put(filepath, content, options);
-        }
-        catch (error) {
-            Logger.setContext("Storage")
-                .error("Something went wrong when saving file.")
-                .trace(error);
-        }
+        await this.driver.put(filepath, content, options);
     }
     /**
      * Copy a file to a new location.
@@ -213,20 +206,14 @@ export default class StorageBuilder {
      * @param {string} destination - The destination file path.
      * @param {StorageOptions} options - Additional storage options.
      * @throws {StorageException} When the source or destination path is empty.
+     * @throws {Error} The underlying driver error is re-thrown.
      */
     async copy(source, destination, options) {
         if (!source)
             throw new StorageException("The source file path is required.");
         if (!destination)
             throw new StorageException("The destination file path is required.");
-        try {
-            await this.driver.copy(source, destination, options);
-        }
-        catch (error) {
-            Logger.setContext("Storage")
-                .error("Something went wrong when copying file.")
-                .trace(error);
-        }
+        await this.driver.copy(source, destination, options);
     }
     /**
      * Move a file to a new location.
@@ -235,20 +222,14 @@ export default class StorageBuilder {
      * @param {string} destination - The destination file path.
      * @param {StorageOptions} options - Additional storage options.
      * @throws {StorageException} When the source or destination path is empty.
+     * @throws {Error} The underlying driver error is re-thrown.
      */
     async move(source, destination, options) {
         if (!source)
             throw new StorageException("The source file path is required.");
         if (!destination)
             throw new StorageException("The destination file path is required.");
-        try {
-            await this.driver.move(source, destination, options);
-        }
-        catch (error) {
-            Logger.setContext("Storage")
-                .error("Something went wrong when moving file.")
-                .trace(error);
-        }
+        await this.driver.move(source, destination, options);
     }
     /**
      * Delete a file from storage.
